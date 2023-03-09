@@ -1,0 +1,123 @@
+
+	import java.awt.Color;
+	import java.awt.EventQueue;
+	import java.awt.Font;
+	import java.awt.Image;
+	import javax.swing.ImageIcon;
+	import javax.swing.JFrame;
+	import javax.swing.JLabel;
+	import javax.swing.JPanel;
+	import javax.swing.JButton;
+	import java.awt.event.ActionListener;
+	import java.awt.event.ActionEvent;
+
+
+	@SuppressWarnings("serial")
+	public class RoleSelection extends JFrame {
+
+		/**
+		 * Launch the application.
+		 */
+		public static void main(String[] args) {
+			EventQueue.invokeLater(new Runnable() {
+				public void run() {
+					try {
+						RoleSelection frame = new RoleSelection();
+						frame.setLocationRelativeTo(null); 
+						frame.setVisible(false);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			});
+		}
+
+		/**
+		 * Create the frame.
+		 */
+		public RoleSelection() {
+			
+			
+
+			
+			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			setBounds(100, 100, 980, 761);
+			getContentPane().setLayout(null);
+			Image img = new ImageIcon(this.getClass().getResource("/student.png")).getImage();
+			
+			JPanel studentPane = new JPanel();
+			studentPane.setBackground(new Color(255, 182, 193));
+			studentPane.setForeground(new Color(255, 182, 193));
+			studentPane.setBounds(130, 91, 294, 471);
+			getContentPane().add(studentPane);
+			studentPane.setLayout(null);
+			
+			JLabel studentIcon = new JLabel("");
+			studentIcon.setBounds(32, 25, 216, 265);
+			studentPane.add(studentIcon);
+			studentIcon.setIcon(new ImageIcon(img));
+			
+			JButton studentBtn = new JButton("SELECT");
+			studentBtn.setFont(new Font("Times New Roman", Font.BOLD, 25));
+			studentBtn.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					StudentLogIn studLogin = new StudentLogIn ();
+					studLogin.setVisible(true);
+					dispose();
+				}
+			});
+			studentBtn.setBounds(57, 399, 191, 47);
+			studentPane.add(studentBtn);
+			
+			JLabel studentLabel = new JLabel("I AM STUDENT");
+			studentLabel.setFont(new Font("Tahoma", Font.PLAIN, 25));
+			studentLabel.setBounds(70, 319, 178, 31);
+			studentPane.add(studentLabel);
+			
+			JPanel adminPane = new JPanel();
+			adminPane.setForeground(new Color(255, 182, 193));
+			adminPane.setBackground(new Color(255, 182, 193));
+			adminPane.setBounds(527, 91, 294, 471);
+			getContentPane().add(adminPane);
+			adminPane.setLayout(null);
+			
+			JLabel adminIcon = new JLabel("");
+			adminIcon.setBounds(47, 28, 221, 243);
+			Image img2 = new ImageIcon(this.getClass().getResource("/admin.jpg")).getImage();
+			adminIcon.setIcon(new ImageIcon(img2));
+			adminPane.add(adminIcon);
+			
+			JButton adminBtn = new JButton("SELECT");
+			adminBtn.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					AdminLogin adminLogin = new AdminLogin ();
+					adminLogin.setVisible(true);
+					dispose();
+				}
+			});
+			adminBtn.setFont(new Font("Times New Roman", Font.BOLD, 25));
+			adminBtn.setBounds(64, 400, 191, 47);
+			adminPane.add(adminBtn);
+			
+			JLabel adminLabel = new JLabel("I AM ADMIN");
+			adminLabel.setFont(new Font("Tahoma", Font.PLAIN, 25));
+			adminLabel.setBounds(90, 314, 178, 31);
+			adminPane.add(adminLabel);
+			
+			JButton homeBtn = new JButton("");
+			homeBtn.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					Main mainFrm = new Main ();
+					mainFrm.setVisible(true);
+					dispose();
+				}
+			});
+			homeBtn.setBounds(10, 10, 76, 59);
+			getContentPane().add(homeBtn);
+			// Create an ImageIcon object using an image file
+	    //    ImageIcon icon = new ImageIcon("home icon.png");
+	        // Set the icon for the button
+	        homeBtn.setIcon(new ImageIcon("C:\\Users\\gomez\\Downloads\\home icon.png"));
+		}
+	}
+
