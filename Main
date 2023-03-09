@@ -1,0 +1,68 @@
+import java.awt.EventQueue;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.Font;
+
+@SuppressWarnings("serial")
+public class Main extends JFrame {
+
+	private JPanel mainFrame;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Main frame = new Main();
+					frame.setLocationRelativeTo(null); 
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public Main() {
+		// Set the title and default close operation for the frame
+		setTitle("Enrollment System");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		// Set the size and position of the frame
+		setBounds(100, 100, 980, 761);
+		
+		// Create a new JPanel to use as the content pane
+		mainFrame = new JPanel();
+		mainFrame.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(mainFrame);
+		mainFrame.setLayout(null);
+		
+		// Create a new JButton object and set its properties
+		JButton btnNewButton = new JButton("START");
+		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 25));
+		
+		// Add an action listener to the button to handle button clicks
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// Create a new RoleSelection frame and display it
+				RoleSelection role = new RoleSelection ();
+				role.setVisible(true);
+				// Dispose the current frame
+				dispose();
+			}
+		});
+		
+		// Set the position and size of the button and add it to the main panel
+		btnNewButton.setBounds(398, 555, 170, 52);
+		mainFrame.add(btnNewButton);
+	}
+}
