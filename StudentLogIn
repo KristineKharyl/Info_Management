@@ -1,0 +1,137 @@
+import java.awt.EventQueue;
+
+	import javax.swing.JFrame;
+	import javax.swing.JPanel;
+	import javax.swing.border.EmptyBorder;
+	import javax.swing.JLabel;
+	import javax.swing.JOptionPane;
+	import java.awt.Font;
+	import javax.swing.JTextField;
+	import javax.swing.JCheckBox;
+	import java.awt.Color;
+	import javax.swing.JButton;
+	import java.awt.event.ActionListener;
+	import java.awt.event.ActionEvent;
+	import javax.swing.JPasswordField;
+	import java.sql.*;	
+
+	@SuppressWarnings("serial")
+	public class StudentLogIn extends JFrame {
+
+		private JPanel contentPane;
+		private JTextField UserID;
+		private JPasswordField password;
+
+		/**
+		 * Launch the application.
+		 */
+		public static void main(String[] args) {
+			EventQueue.invokeLater(new Runnable() {
+				public void run() {
+					try {
+						StudentLogIn frame = new StudentLogIn();
+						frame.setLocationRelativeTo(null); 
+						frame.setVisible(false);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			});
+		}
+
+		/**
+		 * Create the frame.
+		 */
+		public StudentLogIn() {
+			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			setBounds(100, 100, 980, 761);
+			contentPane = new JPanel();
+			contentPane.setBackground(new Color(255, 255, 255));
+			contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+			setContentPane(contentPane);
+			contentPane.setLayout(null);
+			
+			JLabel lblUserID = new JLabel("User ID");
+			lblUserID.setFont(new Font("Tahoma", Font.PLAIN, 25));
+			lblUserID.setBounds(192, 178, 202, 35);
+			contentPane.add(lblUserID);
+			
+			JLabel lblPassword = new JLabel("Password");
+			lblPassword.setFont(new Font("Tahoma", Font.PLAIN, 25));
+			lblPassword.setBounds(192, 296, 202, 35);
+			contentPane.add(lblPassword);
+			
+			UserID = new JTextField();
+			UserID.setFont(new Font("Arial", Font.PLAIN, 25));
+			UserID.setColumns(10);
+			UserID.setBounds(192, 223, 507, 58);
+			contentPane.add(UserID);
+			
+			JCheckBox showPass = new JCheckBox("Show Password");
+			showPass.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					if (showPass.isSelected()) {
+						password.setEchoChar((char)0); //show password
+					}
+					else {
+						password.setEchoChar('\u2022'); //hides password
+					} 
+					
+					
+				}
+			});
+			showPass.setFont(new Font("Arial Narrow", Font.BOLD, 18));
+			showPass.setBackground(Color.WHITE);
+			showPass.setBounds(192, 417, 162, 21);
+			contentPane.add(showPass);
+			
+			JButton BtnLogin = new JButton("SIGN IN");
+			BtnLogin.addActionListener(new ActionListener() {
+			    public void actionPerformed(ActionEvent e) {
+			        // get user ID and password from text fields
+			        String userID = UserID.getText();
+			        String password = String.valueOf(StudentLogIn.this.password.getPassword());
+			        
+			        
+			        try {
+			        	Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/enrollment_system", "studentnum", "pass");
+	 
+
+			            // check if user ID and password are correct
+			            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM students WHERE studentnum=? AND pass=?");
+			            stmt.setString(1, userID);
+			            stmt.setString(2, password);
+			            ResultSet rs = stmt.executeQuery();
+			            
+			            if (rs.next()) { 
+			                dispose(); // close current frame
+			                StudentDashboard student = new StudentDashboard();
+			                student.setVisible(true);
+			            } else { 
+			                JOptionPane.showMessageDialog(contentPane, "Incorrect user ID or password", "Login Error", JOptionPane.ERROR_MESSAGE);
+			            }
+
+			            rs.close();
+			            stmt.close();
+			            conn.close();
+			        } catch (SQLException ex) {
+			            ex.printStackTrace();
+			        }
+			    }
+			});
+
+			BtnLogin.setForeground(Color.BLACK);
+			BtnLogin.setFont(new Font("Arial Narrow", Font.BOLD, 25));
+			BtnLogin.setBackground(new Color(255, 153, 153));
+			BtnLogin.setBounds(355, 469, 171, 44);
+			contentPane.add(BtnLogin);
+			
+			password = new JPasswordField();
+			password.setFont(new Font("Arial", Font.PLAIN, 25));
+			password.setBounds(192, 341, 508, 58);
+			contentPane.add(password);
+			
+		}
+	}
+
